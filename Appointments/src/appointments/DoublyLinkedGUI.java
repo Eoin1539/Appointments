@@ -403,6 +403,7 @@ public final class DoublyLinkedGUI extends javax.swing.JFrame {
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         // TODO add your handling code here:
+        try{
        DoublyLinkedGUI list = new DoublyLinkedGUI();
 		 String name= nameTF.getText();
                 String dob= dobTF.getText();
@@ -413,7 +414,8 @@ public final class DoublyLinkedGUI extends javax.swing.JFrame {
                
 		list.addNodes(ID, name, dob, email, priority);
                 populateTable();
-               
+        }
+        catch(NullPointerException np2){}
                 
 
         
@@ -451,6 +453,7 @@ public final class DoublyLinkedGUI extends javax.swing.JFrame {
 
     private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
         // TODO add your handling code here:
+        try{
         int ID1= Integer.parseInt(searchTF.getText());
         int i = 1;  
         boolean flag = false;  
@@ -459,7 +462,7 @@ public final class DoublyLinkedGUI extends javax.swing.JFrame {
   
         //Checks whether the list is empty  
         if(root == null) {  
-            System.out.println("List is empty");  
+            searchTA.append("ID is not present in the list");   
             return;  
         }  
         while(current != null) {  
@@ -497,11 +500,13 @@ public final class DoublyLinkedGUI extends javax.swing.JFrame {
         
             
 			
-    
+        }
+        catch(NullPointerException np2){}
     }//GEN-LAST:event_searchBtnActionPerformed
 
     private void removeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeBtnActionPerformed
         // TODO add your handling code here:
+        try{
         int ID2= Integer.parseInt(idTF.getText());
                  
                  
@@ -530,6 +535,8 @@ public final class DoublyLinkedGUI extends javax.swing.JFrame {
         else  
              System.out.println("Node is not present in the list");  
                 populateTable();
+        }
+        catch(NullPointerException np2){}
     }//GEN-LAST:event_removeBtnActionPerformed
 
     /**
