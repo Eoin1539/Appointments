@@ -5,189 +5,228 @@
  */
 package appointments;
 
+import static java.nio.file.Files.list;
+import static java.util.Collections.list;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author eoinkirwan
  */
-
 public final class DoublyLinkedGUI extends javax.swing.JFrame {
-    int ID=0;
-    static DNode root;
-	static DNode temp;
-	static DNode current;
-        private JFrame frame;
-        
-        public void populateTable(){
-             try{
-            current = root;
-		boolean arrow = true;
-                outputTA.setText("");
-			
-		
-		do{
-			
-                       
-			outputTA.append(Integer.toString(current.ID)+"                          ");
-                        outputTA.append(current.name+"                          ");
-                        outputTA.append(current.dob+"                          ");
-                        outputTA.append(current.email+"                          ");
-                        outputTA.append(current.email+"                          "+"\n");
-                        
-                 
-                        
-			arrow = false;	
-			
-			current = current.nextNode;
-			
-		}while(current!=null);
-		
-		
-			
-                        
-                        
-                
-                       
-			
-			
-                        
-                     
-			
-			
-			
-		
-               
-             }
-             catch(NullPointerException np2){}
-           
-                  
-              
-            
-            
-        }
-        public void insertNode(int ID, String name, String email, String priority, String dob, int after){
-		
-		DNode dNode = new DNode(ID, name, email, priority, dob);
-		
-		int ithNode = 1;
-		
-		current = root;
-		
-		while(ithNode != after){
-			
-			current = current.nextNode;
-			
-			ithNode++;
-			
-		}
-		
-		temp = current.nextNode;
-		
-		current.nextNode = dNode;
-		dNode.nextNode = temp;
-		temp.previousNode = dNode;
-		dNode.previousNode = current;
-		
-	}
-        
-        public void addNodes(int ID, String name, String email, String priority, String dob){
-		
-		DNode dNode = new DNode(ID, name, email, priority, dob);
-		
-		if(root==null){
-			
-			root = dNode;
-			root.previousNode = null;
-			root.nextNode = null;
-			
-		}else{
-			
-			current = root;
-			
-			while(current.nextNode!=null){
-				
-				current = current.nextNode;
-				
-			}
-			
-			current.nextNode = dNode;
-			dNode.previousNode = current;
-			dNode.nextNode = null;
-			
-		}
-		
-	}
 
-        
-        public void deleteNode(int ID){
-		
-		int ithNode = 1;
-		
-		current = root;
-		
-		if(ID==1){
-			
-			root = current.nextNode;
-			current.nextNode = null;
-			current.previousNode = null;
-			
-		}else{
-			
-			while(ithNode != ID){
-				
-				current = current.nextNode;
-				
-				ithNode++;
-				
-			}
-			
-			if(current.nextNode == null){
-				
-				current.previousNode.nextNode = null;
-				current.previousNode = null;
-				
-			}else{
-				
-				current.previousNode.nextNode = current.nextNode;
-				current.nextNode.previousNode = current.previousNode;
-				
-			}
-			
-		}
-		
-	}
-	
-	public void print(){
-		
-		current = root;
-		boolean arrow = true;
-		
-		do{
-			
-			
-			System.out.println("Name: "+ current.name);
-                        System.out.println("DOB: "+ current.dob);
-                        System.out.println("Email: "+ current.email);
-                        System.out.println("Priority: "+ current.priority);
-			arrow = false;	
-			
-			current = current.nextNode;
-			
-		}while(current!=null);
-		
-	}
-	
-	
+    int ID = 0;
+    static DNode root;
+    static DNode temp;
+    static DNode tail;
+    static DNode current;
+    private JFrame frame;
+
+    public void populateTable() {
+        try {
+            current = root;
+            boolean arrow = true;
+            outputTA.setText("");
+
+            do {
+
+                outputTA.append(Integer.toString(current.ID) + "                          ");
+                outputTA.append(current.name + "                          ");
+                outputTA.append(current.dob + "                          ");
+                outputTA.append(current.email + "                          ");
+                outputTA.append(current.priority + "                          " + "\n");
+
+                arrow = false;
+
+                current = current.nextNode;
+
+            } while (current != null);
+
+        } catch (NullPointerException np2) {
+        }
+
+    }
+
+    public void insertNode(int ID, String name, String email, String priority, String dob, int after) {
+
+        DNode dNode = new DNode(ID, name, email, priority, dob);
+
+        int ithNode = 1;
+
+        current = root;
+
+        while (ithNode != after) {
+
+            current = current.nextNode;
+
+            ithNode++;
+
+        }
+
+        temp = current.nextNode;
+
+        current.nextNode = dNode;
+        dNode.nextNode = temp;
+        temp.previousNode = dNode;
+        dNode.previousNode = current;
+
+    }
+
+    public void insertHigh(int ID, String name, String email, String priority, String dob) {
+        DoublyLinkedGUI list = new DoublyLinkedGUI();
+        DNode dNode = new DNode(ID, name, email, priority, dob);
+
+        try {
+
+            int i = 1;
+            boolean flag = false;
+            //Node current will point to head  
+            DNode current = root;
+            String priority1 = "High";
+
+            while (current != null) {
+                //Compare value to be searched with each node in the list  
+                if (!priority1.equals(current.priority)) {
+                    System.out.println(current.priority);
+                    flag = true;
+                    break;
+                }
+                current = current.nextNode;
+                i++;
+            }
+            if (flag) {
+                boolean arrow = true;
+                if(i==1){
+                    list.addTop(ID, name, email, priority, dob);
+                   
+                    System.out.println("No high found, adding to top of list");
+                }
+                else{
+                   i=i-1;
+                    list.insertNode(ID, name, email, priority, dob, i);
+                    System.out.println("High found, adding to "+i+" position");
+                }
+                
+
+            } 
+
+        } catch (NullPointerException np2) {
+        }
+
+    }
+
+    public void addNodes(int ID, String name, String email, String priority, String dob) {
+
+        DNode dNode = new DNode(ID, name, email, priority, dob);
+
+        if (root == null) {
+
+            root = dNode;
+            root.previousNode = null;
+            root.nextNode = null;
+
+        } else {
+
+            current = root;
+
+            while (current.nextNode != null) {
+
+                current = current.nextNode;
+
+            }
+
+            current.nextNode = dNode;
+            dNode.previousNode = current;
+            dNode.nextNode = null;
+
+        }
+
+    }
+
+    public void addTop(int ID, String name, String email, String priority, String dob) {
+        DNode dNode = new DNode(ID, name, email, priority, dob);
+       if(root==null){
+           root=dNode;
+           tail=dNode;
+           
+           dNode.nextNode=null;
+           dNode.previousNode=null;
+           
+       }
+       else{
+           dNode.nextNode=root;
+          root.previousNode=dNode;
+          root=dNode;
+           
+       }
+       
+    }
+   
+
+    public void deleteNode(int ID) {
+
+        int ithNode = 1;
+
+        current = root;
+
+        if (ID == 1) {
+
+            root = current.nextNode;
+            current.nextNode = null;
+            current.previousNode = null;
+
+        } else {
+
+            while (ithNode != ID) {
+
+                current = current.nextNode;
+
+                ithNode++;
+
+            }
+
+            if (current.nextNode == null) {
+
+                current.previousNode.nextNode = null;
+                current.previousNode = null;
+
+            } else {
+
+                current.previousNode.nextNode = current.nextNode;
+                current.nextNode.previousNode = current.previousNode;
+
+            }
+
+        }
+
+    }
+
+    public void print() {
+
+        current = root;
+        boolean arrow = true;
+
+        do {
+
+            System.out.println("Name: " + current.name);
+            System.out.println("DOB: " + current.dob);
+            System.out.println("Email: " + current.email);
+            System.out.println("Priority: " + current.priority);
+            arrow = false;
+
+            current = current.nextNode;
+
+        } while (current != null);
+
+    }
+
     /**
      * Creates new form AppointmentGUI
      */
     public DoublyLinkedGUI() {
         initComponents();
-        
-       
+
     }
 
     /**
@@ -403,7 +442,30 @@ public final class DoublyLinkedGUI extends javax.swing.JFrame {
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         // TODO add your handling code here:
-        try{
+        try {
+            DoublyLinkedGUI list = new DoublyLinkedGUI();
+            String name = nameTF.getText();
+            String dob = dobTF.getText();
+            String email = emailTF.getText();
+            String priority = (String) priorityCB.getSelectedItem();
+                    
+            if (priority.equals("High")) {
+                ID = ID + 1;
+                list.insertHigh(ID, name, email, priority, dob);
+              
+                populateTable();
+            }
+
+            if (priority.equals("Low")) {
+                ID = ID + 1;
+                
+                list.addNodes(ID, name, email, priority, dob);
+                populateTable();
+            }
+        } catch (NullPointerException np2) {
+        }
+
+        /*try{
        DoublyLinkedGUI list = new DoublyLinkedGUI();
 		 String name= nameTF.getText();
                 String dob= dobTF.getText();
@@ -416,9 +478,8 @@ public final class DoublyLinkedGUI extends javax.swing.JFrame {
                 populateTable();
         }
         catch(NullPointerException np2){}
-                
+         */
 
-        
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void dobTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dobTFActionPerformed
@@ -443,100 +504,88 @@ public final class DoublyLinkedGUI extends javax.swing.JFrame {
 
     private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed
         // TODO add your handling code here:
-      frame = new JFrame("Exit"); // Creates object
-        if(JOptionPane.showConfirmDialog(frame, "Do you want to exit?", "Appointments", 
-                JOptionPane.YES_NO_OPTION)== JOptionPane.YES_NO_OPTION){              
+        frame = new JFrame("Exit"); // Creates object
+        if (JOptionPane.showConfirmDialog(frame, "Do you want to exit?", "Appointments",
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_NO_OPTION) {
             System.exit(0);
         }
-        
+
     }//GEN-LAST:event_exitBtnActionPerformed
 
     private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
         // TODO add your handling code here:
-        try{
-        int ID1= Integer.parseInt(searchTF.getText());
-        int i = 1;  
-        boolean flag = false;  
-        //Node current will point to head  
-        DNode current = root;  
-  
-        //Checks whether the list is empty  
-        if(root == null) {  
-            searchTA.append("ID is not present in the list");   
-            return;  
-        }  
-        while(current != null) {  
-            //Compare value to be searched with each node in the list  
-            if(current.ID == ID1) {  
-                flag = true;  
-                break;  
-            }  
-            current = current.nextNode;
-            i++;  
-        }  
-        if(flag) {
-             boolean arrow = true;
+        try {
+            int ID1 = Integer.parseInt(searchTF.getText());
+            int i = 1;
+            boolean flag = false;
+            //Node current will point to head  
+            DNode current = root;
+
+            //Checks whether the list is empty  
+            if (root == null) {
+                searchTA.append("ID is not present in the list");
+                return;
+            }
+            while (current != null) {
+                //Compare value to be searched with each node in the list  
+                if (current.ID == ID1) {
+                    flag = true;
+                    break;
+                }
+                current = current.nextNode;
+                i++;
+            }
+            if (flag) {
+                boolean arrow = true;
                 searchTA.setText("");
-			
-		
-		
-			
-                       
-			searchTA.append(Integer.toString(current.ID)+"                          ");
-                        searchTA.append(current.name+"                          ");
-                        searchTA.append(current.dob+"                          ");
-                        searchTA.append(current.priority+"                          ");
-                        searchTA.append(current.email+"                          "+"\n");
-     
-                        
-			arrow = false;
+
+                searchTA.append(Integer.toString(current.ID) + "                          ");
+                searchTA.append(current.name + "                          ");
+                searchTA.append(current.dob + "                          ");
+                searchTA.append(current.priority + "                          ");
+                searchTA.append(current.email + "                          " + "\n");
+
+                arrow = false;
+            } else {
+                searchTA.append("ID is not present in the list");
+            }
+
+        } catch (NullPointerException np2) {
         }
-        
-        
-        else { 
-             searchTA.append("ID is not present in the list");  
-        }
-        
-        
-            
-			
-        }
-        catch(NullPointerException np2){}
     }//GEN-LAST:event_searchBtnActionPerformed
 
     private void removeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeBtnActionPerformed
         // TODO add your handling code here:
-        try{
-        int ID2= Integer.parseInt(idTF.getText());
-                 
-                 
-                 
-                 int i = 1;  
-        boolean flag = false;  
-        //Node current will point to head  
-        DNode current = root;  
-  
-        //Checks whether the list is empty  
-        if(root == null) {  
-            System.out.println("List is empty");  
-            return;  
-        }  
-        while(current != null) {  
-            //Compare value to be searched with each node in the list  
-            if(current.ID == ID2) {  
-                flag = true;  
-                break;  
-            }  
-            current = current.nextNode;
-            i++;  
-        }  
-        if(flag)  
-             deleteNode(i);
-        else  
-             System.out.println("Node is not present in the list");  
-                populateTable();
+        try {
+            int ID2 = Integer.parseInt(idTF.getText());
+
+            int i = 1;
+            boolean flag = false;
+            //Node current will point to head  
+            DNode current = root;
+
+            //Checks whether the list is empty  
+            if (root == null) {
+                System.out.println("List is empty");
+                return;
+            }
+            while (current != null) {
+                //Compare value to be searched with each node in the list  
+                if (current.ID == ID2) {
+                    flag = true;
+                    break;
+                }
+                current = current.nextNode;
+                i++;
+            }
+            if (flag) {
+                deleteNode(i);
+            } else {
+                System.out.println("Node is not present in the list");
+            }
+            populateTable();
+        } catch (NullPointerException np2) {
         }
-        catch(NullPointerException np2){}
     }//GEN-LAST:event_removeBtnActionPerformed
 
     /**
@@ -598,5 +647,4 @@ public final class DoublyLinkedGUI extends javax.swing.JFrame {
     private javax.swing.JTextField searchTF;
     // End of variables declaration//GEN-END:variables
 
-   
 }
