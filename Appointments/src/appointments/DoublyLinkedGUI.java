@@ -25,6 +25,7 @@ public final class DoublyLinkedGUI extends javax.swing.JFrame {
 
     public void populateTable() {
         try {
+            //Loops through the list and while current is not null, append the variables to the text area
             current = root;
             boolean arrow = true;
             outputTA.setText("");
@@ -48,6 +49,7 @@ public final class DoublyLinkedGUI extends javax.swing.JFrame {
 
     }
 
+    //Inserts node at particular index
     public void insertNode(int ID, String name, String email, String priority, String dob, int after) {
 
         DNode dNode = new DNode(ID, name, email, priority, dob);
@@ -73,6 +75,7 @@ public final class DoublyLinkedGUI extends javax.swing.JFrame {
 
     }
 
+    //Method for inserting a high record into the list
     public void insertHigh(int ID, String name, String email, String priority, String dob) {
         DoublyLinkedGUI list = new DoublyLinkedGUI();
         DNode dNode = new DNode(ID, name, email, priority, dob);
@@ -84,7 +87,7 @@ public final class DoublyLinkedGUI extends javax.swing.JFrame {
             //Node current will point to head  
             DNode current = root;
             String priority1 = "High";
-
+            //While priority is not equal to high, current goes to the next node, it stops while priortiy is not equal to high, then inserts at that position
             while (current != null) {
                 //Compare value to be searched with each node in the list  
                 if (!priority1.equals(current.priority)) {
@@ -98,12 +101,14 @@ public final class DoublyLinkedGUI extends javax.swing.JFrame {
             if (flag) {
                 boolean arrow = true;
                 if(i==1){
+                    //If there are no other records with the priority of high, then put the node at the top of the list.
                     list.addTop(ID, name, email, priority, dob);
                    
                     System.out.println("No high found, adding to top of list");
                 }
                 else{
                    i=i-1;
+                   //if there is a high in the list, it will place the node below the last high node
                     list.insertNode(ID, name, email, priority, dob, i);
                     System.out.println("High found, adding to "+i+" position");
                 }
@@ -115,7 +120,7 @@ public final class DoublyLinkedGUI extends javax.swing.JFrame {
         }
 
     }
-
+//Add node to the end of the list
     public void addNodes(int ID, String name, String email, String priority, String dob) {
 
         DNode dNode = new DNode(ID, name, email, priority, dob);
@@ -143,7 +148,7 @@ public final class DoublyLinkedGUI extends javax.swing.JFrame {
         }
 
     }
-
+//Add node to the top of the list, creating a new head or root node
     public void addTop(int ID, String name, String email, String priority, String dob) {
         DNode dNode = new DNode(ID, name, email, priority, dob);
        if(root==null){
@@ -163,7 +168,7 @@ public final class DoublyLinkedGUI extends javax.swing.JFrame {
        
     }
    
-
+//Deletes a node based on the node index given
     public void deleteNode(int ID) {
 
         int ithNode = 1;
@@ -201,7 +206,7 @@ public final class DoublyLinkedGUI extends javax.swing.JFrame {
         }
 
     }
-
+/*
     public void print() {
 
         current = root;
@@ -220,7 +225,7 @@ public final class DoublyLinkedGUI extends javax.swing.JFrame {
         } while (current != null);
 
     }
-
+*/
     /**
      * Creates new form AppointmentGUI
      */
@@ -238,6 +243,7 @@ public final class DoublyLinkedGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jInternalFrame1 = new javax.swing.JInternalFrame();
         jLabel1 = new javax.swing.JLabel();
         addBtn = new javax.swing.JButton();
         dobTF = new javax.swing.JTextField();
@@ -259,6 +265,23 @@ public final class DoublyLinkedGUI extends javax.swing.JFrame {
         outputTA = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         searchTA = new javax.swing.JTextArea();
+        deleteBtn = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        deleteTF = new javax.swing.JTextField();
+        nLbl = new javax.swing.JLabel();
+
+        jInternalFrame1.setVisible(true);
+
+        javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
+        jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
+        jInternalFrame1Layout.setHorizontalGroup(
+            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jInternalFrame1Layout.setVerticalGroup(
+            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -343,6 +366,17 @@ public final class DoublyLinkedGUI extends javax.swing.JFrame {
         searchTA.setRows(5);
         jScrollPane2.setViewportView(searchTA);
 
+        deleteBtn.setText("Delete");
+        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBtnActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Delete n people from end of queue");
+
+        nLbl.setText("N number:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -350,7 +384,7 @@ public final class DoublyLinkedGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 638, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -372,11 +406,22 @@ public final class DoublyLinkedGUI extends javax.swing.JFrame {
                                         .addGap(18, 18, 18)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(addBtn)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(dobTF)
-                                        .addComponent(emailTF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
-                                        .addComponent(priorityCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(nameTF, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(nameTF, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                                        .addComponent(jLabel2))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(dobTF)
+                                            .addComponent(emailTF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                                            .addComponent(priorityCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(nLbl)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(deleteTF, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(deleteBtn))
+                                        .addGap(40, 40, 40))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(37, 37, 37)
                                 .addComponent(searchLbl)
@@ -404,15 +449,24 @@ public final class DoublyLinkedGUI extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nameLbl)
-                    .addComponent(nameTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nameTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
                 .addGap(14, 14, 14)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(dobTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dobLbl))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(emailLbl)
-                    .addComponent(emailTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(dobTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dobLbl))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(emailLbl)
+                            .addComponent(emailTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(deleteTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nLbl))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(deleteBtn)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(priorityLbl)
@@ -442,20 +496,30 @@ public final class DoublyLinkedGUI extends javax.swing.JFrame {
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         // TODO add your handling code here:
+        //Adds a person to the queue
         try {
             DoublyLinkedGUI list = new DoublyLinkedGUI();
             String name = nameTF.getText();
             String dob = dobTF.getText();
             String email = emailTF.getText();
             String priority = (String) priorityCB.getSelectedItem();
-                    
+                    //If the priority is high, then insert using the insertHigh method
             if (priority.equals("High")) {
-                ID = ID + 1;
+                ID = ID + 1; //Incements ID when a record is placed in the queue
                 list.insertHigh(ID, name, email, priority, dob);
               
                 populateTable();
             }
-
+            //If the priority is low, then insert using the insertMedium method which places the node just below the high node if one exists
+            //If there is another medium in the list it will place the node behind the medium in the queue
+            //If there are no High or medium records in the queue, then it will place it at the head of the list
+            if (priority.equals("Medium")) {
+                ID = ID + 1;
+                list.insertMedium(ID, name, email, priority, dob);
+              
+                populateTable();
+            }
+//If the priority is low, then insert using the addNodes method which places the node at the end of the list
             if (priority.equals("Low")) {
                 ID = ID + 1;
                 
@@ -544,6 +608,7 @@ public final class DoublyLinkedGUI extends javax.swing.JFrame {
                 searchTA.append(current.dob + "                          ");
                 searchTA.append(current.priority + "                          ");
                 searchTA.append(current.email + "                          " + "\n");
+                searchTA.append("That person is at position: "+i+" in the queue");
 
                 arrow = false;
             } else {
@@ -555,8 +620,9 @@ public final class DoublyLinkedGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_searchBtnActionPerformed
 
     private void removeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeBtnActionPerformed
-        // TODO add your handling code here:
+        //Removes a person with the ID entered
         try {
+            //gets the ID from text field
             int ID2 = Integer.parseInt(idTF.getText());
 
             int i = 1;
@@ -579,6 +645,7 @@ public final class DoublyLinkedGUI extends javax.swing.JFrame {
                 i++;
             }
             if (flag) {
+                //deletes the node at the position i
                 deleteNode(i);
             } else {
                 System.out.println("Node is not present in the list");
@@ -587,6 +654,24 @@ public final class DoublyLinkedGUI extends javax.swing.JFrame {
         } catch (NullPointerException np2) {
         }
     }//GEN-LAST:event_removeBtnActionPerformed
+
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+        // TODO add your handling code here:
+        int ID12 = Integer.parseInt(deleteTF.getText());
+        int i;
+        System.out.println(DNode.noOfLinkedList);
+        
+        for(i=0;i<=ID12;i++){
+          
+    
+            //Updates text area
+            populateTable();
+            
+        }
+        
+        
+        
+    }//GEN-LAST:event_deleteBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -625,6 +710,8 @@ public final class DoublyLinkedGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
+    private javax.swing.JButton deleteBtn;
+    private javax.swing.JTextField deleteTF;
     private javax.swing.JLabel dobLbl;
     private javax.swing.JTextField dobTF;
     private javax.swing.JLabel emailLbl;
@@ -632,9 +719,12 @@ public final class DoublyLinkedGUI extends javax.swing.JFrame {
     private javax.swing.JButton exitBtn;
     private javax.swing.JLabel idLbl;
     private javax.swing.JTextField idTF;
+    private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel nLbl;
     private javax.swing.JLabel nameLbl;
     private javax.swing.JTextField nameTF;
     private javax.swing.JTextArea outputTA;
